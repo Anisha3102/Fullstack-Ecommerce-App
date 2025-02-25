@@ -1,11 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
-//import morgan from "morgan";
+import morgan from "morgan";
 import chalk from "chalk";
-//import connectDB from "./config/db.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
-const app = express();
+connectDB();
+const app = express(); 
+app.use(express.json());
+app.use(morgan('dev'))
 
 app.get("/", (req, res) => {
   res.send({
