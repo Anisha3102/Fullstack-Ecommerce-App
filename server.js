@@ -3,20 +3,20 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import chalk from "chalk";
 import connectDB from "./config/db.js";
-import authRoutes from "./routes/auth.js";
+import authRoutes from "./routes/authRoute.js";
 
 dotenv.config();
 connectDB();
-const app = express(); 
+const app = express();
 app.use(express.json());
-app.use(morgan('dev'))
+app.use(morgan("dev"));
 
-app.use('/api/v1/auth', authRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.get("/", (req, res) => {
-  res.send({
-    message: " Welcome to E-commerce ",
-  });
+  res.send(
+    " Welcome to E-commerce "
+  );
 });
 
 const port = process.env.port || 8080;

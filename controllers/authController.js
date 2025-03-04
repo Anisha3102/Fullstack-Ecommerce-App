@@ -91,6 +91,7 @@ export const loginController = async (req, res) => {
         phone: user.phone,
         address: user.address,
       },
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -100,4 +101,8 @@ export const loginController = async (req, res) => {
       error,
     });
   }
+};
+
+export const testController = (req, res) => {
+  res.send ("protected route");
 };
