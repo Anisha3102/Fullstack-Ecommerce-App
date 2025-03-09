@@ -1,9 +1,21 @@
+import { Helmet } from "react-helmet";
+
 import Footer from "./Footer";
 import Header from "./Header";
 
-function Layout({ children }) {
+function Layout({ children, title, description, keywords, author }) {
   return (
     <div className="flex flex-col min-h-screen">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <div>
+          <meta name="description" content={description} />
+          <meta name="keywords" content={keywords} />
+          <meta name="author" content={author} />
+        </div>
+        <title>{title}</title>
+      </Helmet>
+
       <Header />
       <main role="main" className="flex-grow">
         {children}
@@ -12,5 +24,12 @@ function Layout({ children }) {
     </div>
   );
 }
+
+Layout.defaultProps = {
+  title: "Ecommerce app",
+  description: "Mern stack project",
+  keywords: "MERN MongoDB Express React Node",
+  author: "Anisha Das",
+};
 
 export default Layout;

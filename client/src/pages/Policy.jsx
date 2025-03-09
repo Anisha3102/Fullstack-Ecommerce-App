@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 function Policy() {
   return (
     <>
-      <Layout>
+      <Layout title={"Our policies - Ecommerce"}>
         <div className="relative isolate overflow-hidden bg-gray-900 min-h-[73.5vh] py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="max-w-xl mb-20 lg:max-w-full">
