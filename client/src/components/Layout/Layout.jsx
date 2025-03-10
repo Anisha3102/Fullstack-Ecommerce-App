@@ -1,4 +1,6 @@
+/* eslint-disable */
 import { Helmet } from "react-helmet";
+import { Toaster } from "react-hot-toast";
 
 import Footer from "./Footer";
 import Header from "./Header";
@@ -14,10 +16,12 @@ function Layout({ children, title, description, keywords, author }) {
           <meta name="author" content={author} />
         </div>
         <title>{title}</title>
+        {/* <link rel="canonical" href="http://mysite.com/example" /> */}
       </Helmet>
 
       <Header />
-      <main role="main" className="flex-grow">
+      <main role="main" className="flex-grow overflow-scroll no-scrollbar">
+        <Toaster />
         {children}
       </main>
       <Footer />

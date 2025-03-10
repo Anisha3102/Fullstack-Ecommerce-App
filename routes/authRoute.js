@@ -1,10 +1,9 @@
 import express from "express";
 import {
+  registerController,
   loginController,
-  testController,
-    registerController,
 } from "../controllers/authController.js";
-import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
+import { isAdmin, verifyJWT } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -12,6 +11,13 @@ router.post("/register", registerController);
 
 router.post("/login", loginController);
 
-router.get("/test",requireSignIn,isAdmin, testController);
+// Protected Routes
+router.get("/userAuth", verifyJWT, (req, res) => {
+  res.status(200).send({ ok: true });
+});
+
+router.get("/adminAuth", verifyJWT, isAdmin, (req, res) => {
+  res.status(200).send({ ok: true });
+});
 
 export default router;

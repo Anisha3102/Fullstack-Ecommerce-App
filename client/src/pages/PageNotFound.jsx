@@ -9,7 +9,7 @@ export default function PageNotFound() {
           <div>
             <meta name="description" content="Error page in MERN project" />
             <meta name="keywords" content="Error 404" />
-            <meta name="author" content="Saumyajeet Varma" />
+            <meta name="author" content="Anisha Das" />
           </div>
           <title>404 - Page not found</title>
         </Helmet>

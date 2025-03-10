@@ -1,52 +1,61 @@
-import { comparePassword, hashPassword } from "../helpers/authHelper.js";
-import userModel from "../models/userModel.js";
+import chalk from "chalk";
 import JWT from "jsonwebtoken";
+
+import userModel from "../models/userModel.js";
+import { comparePassword, hashPassword } from "../utils/authHelper.js";
 
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, phone, address } = req.body;
+
     if (!name) {
-      return res.send({ error: "Name is Required" });
+      return res.send({ message: "Name is required" });
     }
     if (!email) {
-      return res.send({ error: "email is Required" });
+      return res.send({ message: "Email is required" });
     }
     if (!password) {
-      return res.send({ error: "password is Required" });
+      return res.send({ message: "Password is required" });
     }
     if (!phone) {
-      return res.send({ error: "phone no. is Required" });
+      return res.send({ message: "Phone number is required" });
     }
     if (!address) {
-      return res.send({ error: "address is Required" });
+      return res.send({ message: "Address is required" });
     }
 
     const existingUser = await userModel.findOne({ email });
 
     if (existingUser) {
       return res.status(200).send({
-        success: true,
-        message: "Already registered please login",
+        success: false,
+        message: "Already registered, please login",
       });
     }
 
     const hashedPassword = await hashPassword(password);
 
-    const user = await new userModel({
+    const user = await userModel.create({
       name,
       email,
       phone,
       address,
       password: hashedPassword,
-    }).save();
+    });
 
-    res.status(201).send({
+    res.status(200).send({
       success: true,
-      message: "User Registered Successfully",
-      user,
+      message: "User registered successfully",
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      },
     });
   } catch (error) {
-    console.log(error);
+    console.log(chalk.red(error));
+
     res.status(500).send({
       success: false,
       message: "Error in registration",
@@ -58,51 +67,55 @@ export const registerController = async (req, res) => {
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     if (!email || !password) {
       return res.status(404).send({
         success: false,
-        message: "Email or password is Invalid",
-      });
-    }
-    const user = await userModel.findOne({ email });
-    if (!user) {
-      return res.status(404).send({
-        success: false,
-        message: "User not found",
+        message: "Invalid email or password",
       });
     }
 
-    const match = await comparePassword(password, user.password);
-    if (!match) {
-      return res.status(200).send({
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).send({
         success: false,
-        message: "Invalid Password",
+        message: "Email not registered",
       });
     }
-    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+
+    const correctPassword = await comparePassword(password, user.password);
+
+    if (!correctPassword) {
+      return res.status(403).send({
+        success: false,
+        message: "Invalid password",
+      });
+    }
+
+    const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
+
     res.status(200).send({
       success: true,
-      message: "User logged in successfully",
+      message: "User logged in seuccessfully",
       user: {
         name: user.name,
         email: user.email,
         phone: user.phone,
         address: user.address,
+        role: user.role,
       },
       token,
     });
   } catch (error) {
-    console.log(error);
+    console.log(chalk.red(error));
+
     res.status(500).send({
       success: false,
       message: "Error in login",
       error,
     });
   }
-};
-
-export const testController = (req, res) => {
-  res.send ("protected route");
 };
