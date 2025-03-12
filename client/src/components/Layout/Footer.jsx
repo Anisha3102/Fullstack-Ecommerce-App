@@ -10,7 +10,7 @@ function Footer() {
       <div className="text-center mb-4">
         <p className="text-gray-300">
           All rights reserved &copy;{" "}
-          <span className="text-white font-bold">SV</span>
+          <span className="text-white font-bold">ANI</span>
         </p>
       </div>
       <hr className="w-3/4 m-auto border-gray-300" />

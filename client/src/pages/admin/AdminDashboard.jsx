@@ -7,11 +7,11 @@ function AdminDashboard() {
 
   return (
     <>
-      <Layout>
+      <Layout title={"Admin - Dashboard"}>
         <div className="flex">
           <AdminMenu />
           <div className="p-5">
-            <div className="w-96 text-md space-y-2 bg-gray-800 px-5 py-3 text-white rounded-lg">
+            <div className="w-96 text-md space-y-2 bg-gray-100 shadow-lg px-5 py-3 text-gray-800 rounded-lg">
               <div className="flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
