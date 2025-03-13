@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post("/create-category", verifyJWT, isAdmin, createCategoryController);
 
-router.post(
+router.put(
   "/update-category/:categoryId",
   verifyJWT,
   isAdmin,
