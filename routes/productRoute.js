@@ -20,7 +20,7 @@ router.post(
   createProductController
 );
 
-router.post(
+router.put(
   "/update-product/:productId",
   verifyJWT,
   isAdmin,

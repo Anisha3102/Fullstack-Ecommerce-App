@@ -19,7 +19,7 @@ router.put(
   updateCategoryController
 );
 
-router.get("/categories", getAllCategoryController);
+router.get("/get-categories", getAllCategoryController);
 
 router.get("/category/:slug", getOneCategoryController);
 
