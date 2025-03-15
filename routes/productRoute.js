@@ -7,6 +7,9 @@ import {
   getAllProductsController,
   getOneProductController,
   getProductImageController,
+  productCountController,
+  productFilterController,
+  productListController,
   updateProductController,
 } from "../controllers/productController.js";
 
@@ -40,5 +43,11 @@ router.delete(
   isAdmin,
   deleteProductController
 );
+
+router.post("/product-filter", productFilterController);
+
+router.get("/product-count", productCountController);
+
+router.get("/product-list/:page", productListController);
 
 export default router;
