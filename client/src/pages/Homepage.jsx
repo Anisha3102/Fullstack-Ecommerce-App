@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import chalk from "chalk";
@@ -6,6 +7,8 @@ import { Checkbox, Radio } from "antd";
 
 import Layout from "../components/Layout/Layout";
 import { prices } from "../utils/prices.js";
+import SearchInput from "../components/form/SearchInput.jsx";
+import { useCart } from "../context/CartProvider.jsx";
 
 function Homepage() {
   const [products, setProducts] = useState([]);
@@ -16,6 +19,10 @@ function Homepage() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  const [cart, setCart] = useCart();
+
+  const navigate = useNavigate();
+
   const getTotalProducts = async () => {
     try {
       const response = await axios.get("/api/v1/product/product-count");
@@ -24,7 +31,7 @@ function Homepage() {
         setTotal(response.data.totalProducts);
       }
     } catch (error) {
-      console.log(chalk(error));
+      console.log(chalk.red(error));
       toast.error(error.message);
     }
   };
@@ -37,7 +44,7 @@ function Homepage() {
         setCategories(response.data.categories);
       }
     } catch (error) {
-      console.log(chalk(error));
+      console.log(chalk.red(error));
       toast.error(error.message);
     }
   };
@@ -56,7 +63,7 @@ function Homepage() {
         setProducts(response.data.products);
       }
     } catch (error) {
-      console.log(chalk(`Error: ${error.message}`));
+      console.log(chalk.red(`Error: ${error.message}`));
       toast.error("Something went wrong !");
     } finally {
       setLoading(false);
@@ -81,7 +88,7 @@ function Homepage() {
         setProducts([...products, ...response.data.products]);
       }
     } catch (error) {
-      console.log(chalk(`Error: ${error.message}`));
+      console.log(chalk.red(`Error: ${error.message}`));
       toast.error("Something went wrong !");
     } finally {
       setLoading(false);
@@ -125,7 +132,7 @@ function Homepage() {
         setProducts(response?.data?.products);
       }
     } catch (error) {
-      console.log(chalk(error));
+      console.log(chalk.red(error));
       toast.error(error.message);
     }
   };
@@ -174,19 +181,20 @@ function Homepage() {
           </div>
           <div className="p-5 w-4/5">
             <h1 className="text-center">Homepage</h1>
+            <SearchInput />
             <div>
               <h2>All Products</h2>
               <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
                 {products.length ? (
                   products.map((product) => (
                     <div
-                      className="group relative p-4 bg-gray-100 rounded-lg -z-10"
+                      className="group relative p-4 bg-gray-100 rounded-lg"
                       key={product._id}
                     >
                       <img
                         alt="Product image"
                         src={`/api/v1/product/get-product-image/${product._id}`}
-                        className="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-80 lg:aspect-auto lg:h-60"
+                        className="aspect-square w-full rounded-md bg-gray-200 object-cover lg:aspect-auto lg:h-60"
                       />
                       <div className="mt-4 flex justify-between">
                         <div>
@@ -206,10 +214,19 @@ function Homepage() {
                         </p>
                       </div>
                       <div className="w-full flex items-center justify-between mt-4">
-                        <button className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+                        <button
+                          onClick={() => navigate(`/product/${product.slug}`)}
+                          className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 z-0"
+                        >
                           More details
                         </button>
-                        <button className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+                        <button
+                          onClick={() => {
+                            setCart([...cart, product]);
+                            toast.success(`${product.name} added to cart`);
+                          }}
+                          className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 z-0"
+                        >
                           Add to cart
                         </button>
                       </div>

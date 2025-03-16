@@ -171,7 +171,10 @@ export const getOneProductController = async (req, res) => {
   try {
     const { slug } = req.params;
 
-    const product = await productModel.findOne({ slug });
+    const product = await productModel
+      .findOne({ slug })
+      .select("-image")
+      .populate("category");
 
     res.status(200).send({
       success: true,
@@ -321,6 +324,89 @@ export const productListController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in products per page controller",
+      error,
+    });
+  }
+};
+
+export const searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+
+    const result = await productModel
+      .find({
+        $or: [
+          { name: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+        ],
+      })
+      .select("-image");
+
+    res.status(200).send({
+      success: true,
+      message: "Searched product fetched",
+      result,
+    });
+  } catch (error) {
+    console.log(chalk.red(error));
+
+    res.status(500).send({
+      success: false,
+      message: "Error in searching the product",
+      error,
+    });
+  }
+};
+
+export const similarProductController = async (req, res) => {
+  try {
+    const { categoryId, productId } = req.params;
+
+    const products = await productModel
+      .find({
+        category: categoryId,
+        _id: { $ne: productId },
+      })
+      .select("-image")
+      .limit(4)
+      .populate("category");
+
+    res.status(200).send({
+      success: true,
+      message: "Similar products fetched",
+      products,
+    });
+  } catch (error) {
+    console.log(chalk.red(error));
+
+    res.status(500).send({
+      success: false,
+      message: "Error in fetching similar the products",
+      error,
+    });
+  }
+};
+
+export const categoryProductsController = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    const category = await categoryModel.findOne({ slug });
+
+    const products = await productModel.find({ category }).populate();
+
+    res.status(200).send({
+      success: true,
+      message: "Category products fetched successfully",
+      products,
+      category,
+    });
+  } catch (error) {
+    console.log(chalk.red(error));
+
+    res.status(500).send({
+      success: false,
+      message: "Error in fecthing category products",
       error,
     });
   }

@@ -2,6 +2,7 @@ import express from "express";
 import formidable from "express-formidable";
 import { isAdmin, verifyJWT } from "../middlewares/authMiddleware.js";
 import {
+  categoryProductsController,
   createProductController,
   deleteProductController,
   getAllProductsController,
@@ -10,6 +11,8 @@ import {
   productCountController,
   productFilterController,
   productListController,
+  searchProductController,
+  similarProductController,
   updateProductController,
 } from "../controllers/productController.js";
 
@@ -49,5 +52,14 @@ router.post("/product-filter", productFilterController);
 router.get("/product-count", productCountController);
 
 router.get("/product-list/:page", productListController);
+
+router.get("/search/:keyword", searchProductController);
+
+router.get(
+  "/similar-products/:categoryId/:productId",
+  similarProductController
+);
+
+router.get("/category-products/:slug", categoryProductsController);
 
 export default router;

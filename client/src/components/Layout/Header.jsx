@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import {
   Disclosure,
   DisclosureButton,
@@ -11,11 +12,10 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import { useAuth } from "../../context/AuthProvider";
-import toast from "react-hot-toast";
 
 const navigationItems = [
   { name: "Home", href: "/" },
-  { name: "Category", href: "/category" },
+  { name: "Categories", href: "/categories" },
   { name: "Cart", href: "/cart" },
   { name: "Register", href: "/register" },
   { name: "Login", href: "/login" },
@@ -23,7 +23,7 @@ const navigationItems = [
 
 const authNavigationItems = [
   { name: "Home", href: "/" },
-  { name: "Category", href: "/category" },
+  { name: "Categories", href: "/categories" },
   { name: "Cart", href: "/cart" },
 ];
 
@@ -47,7 +47,10 @@ export default function Header() {
   }, [activeTab]);
 
   return (
-    <Disclosure as="nav" className="bg-gray-800 drop-shadow-lg sticky top-0">
+    <Disclosure
+      as="nav"
+      className="bg-gray-800 drop-shadow-lg sticky top-0 z-10"
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
