@@ -1,5 +1,6 @@
 import Layout from "../components/Layout/Layout";
 import useCategory from "../hooks/useCategory";
+import { capitalizeString } from "../utils/capitalizeString";
 
 const Categories = () => {
   const categories = useCategory();
@@ -21,7 +22,7 @@ const Categories = () => {
                     </h1>
                     <div>
                       <h3 className="text-base/7 font-semibold tracking-tight text-gray-700">
-                        {category.name}
+                        {capitalizeString(category?.name)}
                       </h3>
                     </div>
                   </div>

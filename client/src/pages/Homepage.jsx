@@ -9,6 +9,9 @@ import Layout from "../components/Layout/Layout";
 import { prices } from "../utils/prices.js";
 import SearchInput from "../components/form/SearchInput.jsx";
 import { useCart } from "../context/CartProvider.jsx";
+// eslint-disable-next-line no-unused-vars
+import Spinner from "../components/Spinner.jsx";
+import { capitalizeString } from "../utils/capitalizeString.js";
 
 function Homepage() {
   const [products, setProducts] = useState([]);
@@ -17,7 +20,9 @@ function Homepage() {
   const [radio, setRadio] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
+  const [loading, setLoading] = useState(false); // TODO: Need to setup loader correctly
+  const [paginationLoading, setPaginationLoading] = useState(false);
 
   const [cart, setCart] = useCart();
 
@@ -25,6 +30,8 @@ function Homepage() {
 
   const getTotalProducts = async () => {
     try {
+      setLoading(true);
+
       const response = await axios.get("/api/v1/product/product-count");
 
       if (response.data.success) {
@@ -33,11 +40,15 @@ function Homepage() {
     } catch (error) {
       console.log(chalk.red(error));
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const getAllCategories = async () => {
     try {
+      setLoading(true);
+
       const response = await axios.get("/api/v1/category/get-categories");
 
       if (response.data.success) {
@@ -46,6 +57,8 @@ function Homepage() {
     } catch (error) {
       console.log(chalk.red(error));
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,6 +70,7 @@ function Homepage() {
   const getAllProducts = async () => {
     try {
       setLoading(true);
+
       const response = await axios.get(`/api/v1/product/product-list/${page}`);
 
       if (response.data.success) {
@@ -81,7 +95,8 @@ function Homepage() {
 
   const handleLoadMore = async () => {
     try {
-      setLoading(true);
+      setPaginationLoading(true);
+
       const response = await axios.get(`/api/v1/product/product-list/${page}`);
 
       if (response.data.success) {
@@ -91,7 +106,7 @@ function Homepage() {
       console.log(chalk.red(`Error: ${error.message}`));
       toast.error("Something went wrong !");
     } finally {
-      setLoading(false);
+      setPaginationLoading(false);
     }
   };
 
@@ -123,6 +138,8 @@ function Homepage() {
 
   const filterProducts = async () => {
     try {
+      setLoading(true);
+
       const response = await axios.post(`/api/v1/product/product-filter`, {
         checked,
         radio,
@@ -134,6 +151,8 @@ function Homepage() {
     } catch (error) {
       console.log(chalk.red(error));
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -152,7 +171,7 @@ function Homepage() {
                       handleFilter(e.target.checked, category._id)
                     }
                   >
-                    {category.name}
+                    {capitalizeString(category?.name)}
                   </Checkbox>
                 ))}
               </div>
@@ -180,10 +199,10 @@ function Homepage() {
             </div>
           </div>
           <div className="p-5 w-4/5">
-            <h1 className="text-center">Homepage</h1>
+            <h1 className="text-3xl font-semibold">Homepage</h1>
             <SearchInput />
             <div>
-              <h2>All Products</h2>
+              <h2 className="text-lg ">All Products</h2>
               <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
                 {products.length ? (
                   products.map((product) => (
@@ -245,7 +264,7 @@ function Homepage() {
                     }}
                     className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                   >
-                    {loading ? "Loading..." : "Load more"}
+                    {paginationLoading ? "Loading..." : "Load more"}
                   </button>
                 )}
               </div>
