@@ -2,6 +2,8 @@ import express from "express";
 import formidable from "express-formidable";
 import { isAdmin, verifyJWT } from "../middlewares/authMiddleware.js";
 import {
+  braintreePaymentController,
+  braintreeTokenController,
   categoryProductsController,
   createProductController,
   deleteProductController,
@@ -61,5 +63,9 @@ router.get(
 );
 
 router.get("/category-products/:slug", categoryProductsController);
+
+router.get("/braintree/token", braintreeTokenController);
+
+router.post("/braintree/payment", verifyJWT, braintreePaymentController);
 
 export default router;
