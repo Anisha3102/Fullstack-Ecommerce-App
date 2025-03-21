@@ -1,4 +1,5 @@
-const CartTable = ({ products, handleRemove }) => {
+
+const ProductTable = ({ products, purpose, handleRemove }) => {
   return (
     <div className="container">
       <div className="overflow-x-auto w-full">
@@ -9,9 +10,11 @@ const CartTable = ({ products, handleRemove }) => {
                 Product Image
               </th>
               <th className="py-3 px-6 text-left text-gray-600 font-semibold">
-                Product Name
+                Product Details
               </th>
-              <th className="py-3 px-6 text-left text-gray-600 font-semibold"></th>
+              {purpose === "cart" && (
+                <th className="py-3 px-6 text-left text-gray-600 font-semibold"></th>
+              )}
             </tr>
           </thead>
           <tbody>
@@ -33,15 +36,17 @@ const CartTable = ({ products, handleRemove }) => {
                   </p>
                   <p className="mt-2 text-md font-medium">${product.price}</p>
                 </td>
-                <td>
-                  <button
-                    onClick={() => handleRemove(product._id)}
-                    className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
-                    aria-label={`Remove ${product.name} from cart`}
-                  >
-                    Remove
-                  </button>
-                </td>
+                {purpose === "cart" && (
+                  <td>
+                    <button
+                      onClick={() => handleRemove(product._id)}
+                      className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                      aria-label={`Remove ${product.name} from cart`}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
@@ -51,4 +56,4 @@ const CartTable = ({ products, handleRemove }) => {
   );
 };
 
-export default CartTable;
+export default ProductTable;

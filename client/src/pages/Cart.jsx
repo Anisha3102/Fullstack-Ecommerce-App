@@ -6,7 +6,7 @@ import chalk from "chalk";
 import DropIn from "braintree-web-drop-in-react";
 
 import Layout from "../components/Layout/Layout.jsx";
-import CartTable from "../components/CartTable.jsx";
+import ProductTable from "../components/ProductTable.jsx";
 import { useAuth } from "../context/AuthProvider";
 import { useCart } from "../context/CartProvider";
 
@@ -113,7 +113,11 @@ const Cart = () => {
         </div>
         <div className="flex my-4 gap-6">
           <div className="w-2/3">
-            <CartTable products={cart} handleRemove={handleRemove} />
+            <ProductTable
+              products={cart}
+              purpose="cart"
+              handleRemove={handleRemove}
+            />
           </div>
           <div className="w-1/3">
             <h1 className="text-3xl text-center font-semibold mb-2">

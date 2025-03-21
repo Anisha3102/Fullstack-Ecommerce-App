@@ -159,10 +159,12 @@ function Homepage() {
   return (
     <>
       <Layout title={"Best offers - Ecommerce"}>
-        <div className="flex">
+        <div className="flex min-h-[73.5px]">
           <div className="w-1/5 py-5 px-5 bg-gray-100 space-y-4">
             <div>
-              <h6 className="text-start px-5">Filter by category</h6>
+              <h6 className="text-start text-lg font-semibold px-5">
+                Filter by category
+              </h6>
               <div className="flex flex-col items-start px-5 py-3">
                 {categories?.map((category) => (
                   <Checkbox
@@ -177,7 +179,9 @@ function Homepage() {
               </div>
             </div>
             <div>
-              <h6 className="text-start px-5">Filter by price</h6>
+              <h6 className="text-start text-lg font-semibold px-5">
+                Filter by price
+              </h6>
               <Radio.Group
                 onChange={(e) => setRadio(e.target.value)}
                 className="flex flex-col items-start px-5 py-3"

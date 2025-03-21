@@ -4,6 +4,8 @@ import {
   loginController,
   updateProfileController,
   changePasswordController,
+  getAllOrdersController,
+  getOrderController,
 } from "../controllers/authController.js";
 import { isAdmin, verifyJWT } from "../middlewares/authMiddleware.js";
 
@@ -24,5 +26,9 @@ router.get("/userAuth", verifyJWT, (req, res) => {
 router.get("/adminAuth", verifyJWT, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
+
+router.get("/orders", verifyJWT, getAllOrdersController);
+
+router.get("/order/:orderId", verifyJWT, getOrderController);
 
 export default router;
