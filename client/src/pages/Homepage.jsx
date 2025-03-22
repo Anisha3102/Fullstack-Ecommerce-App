@@ -30,10 +30,10 @@ function Homepage() {
     try {
       setLoading(true);
 
-      const response = await axios.get("/api/v1/product/product-count");
+      const { data } = await axios.get("/api/v1/product/product-count");
 
-      if (response.data.success) {
-        setTotal(response.data.totalProducts);
+      if (data.success) {
+        setTotal(data.totalProducts);
       }
     } catch (error) {
       console.log(error);
@@ -47,10 +47,10 @@ function Homepage() {
     try {
       setLoading(true);
 
-      const response = await axios.get("/api/v1/category/get-categories");
+      const { data } = await axios.get("/api/v1/category/get-categories");
 
-      if (response.data.success) {
-        setCategories(response.data.categories);
+      if (data.success) {
+        setCategories(data.categories);
       }
     } catch (error) {
       console.log(error);
@@ -69,13 +69,13 @@ function Homepage() {
     try {
       setLoading(true);
 
-      const response = await axios.get(`/api/v1/product/product-list/${page}`);
+      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
 
-      if (response.data.success) {
-        setProducts(response.data.products);
+      if (data.success) {
+        setProducts(data.products);
       }
     } catch (error) {
-      console.log(`Error: ${error.message}`);
+      console.log(error);
       toast.error("Something went wrong !");
     } finally {
       setLoading(false);
@@ -95,13 +95,13 @@ function Homepage() {
     try {
       setPaginationLoading(true);
 
-      const response = await axios.get(`/api/v1/product/product-list/${page}`);
+      const { data } = await axios.get(`/api/v1/product/product-list/${page}`);
 
-      if (response.data.success) {
-        setProducts([...products, ...response.data.products]);
+      if (data.success) {
+        setProducts([...products, ...data.products]);
       }
     } catch (error) {
-      console.log(`Error: ${error.message}`);
+      console.log(error);
       toast.error("Something went wrong !");
     } finally {
       setPaginationLoading(false);
@@ -138,13 +138,13 @@ function Homepage() {
     try {
       setLoading(true);
 
-      const response = await axios.post(`/api/v1/product/product-filter`, {
+      const { data } = await axios.post(`/api/v1/product/product-filter`, {
         checked,
         radio,
       });
 
-      if (response.data.success) {
-        setProducts(response?.data?.products);
+      if (data.success) {
+        setProducts(data.products);
       }
     } catch (error) {
       console.log(error);
@@ -156,7 +156,7 @@ function Homepage() {
 
   return (
     <>
-      <Layout title={"Best offers - Ecommerce"}>
+      <Layout title={"Cartify - Shop now"}>
         <div className="flex min-h-[73.5px]">
           <div className="w-1/5 py-5 px-5 bg-gray-100 space-y-4">
             <div>

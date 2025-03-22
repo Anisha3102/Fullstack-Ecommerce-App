@@ -4,37 +4,16 @@ import axios from "axios";
 
 import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
-import ProductForm from "../../components/form/ProductForm";
-import { useNavigate, useParams } from "react-router-dom";
 
-function ProductPage() {
-  const [categories, setCategories] = useState([]);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [shipping, setShipping] = useState("");
-  const [image, setImage] = useState("");
-  const [id, setId] = useState(null);
+function Products() {
+  const [products, setProducts] = useState([]);
 
-  const navigate = useNavigate();
-  const params = useParams();
-
-  const getProduct = async () => {
+  const getAllProducts = async () => {
     try {
-      const response = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
-      );
+      const { data } = await axios.get("/api/v1/product/get-products");
 
-      if (response.data.success) {
-        setName(response.data.product.name);
-        setDescription(response.data.product.description);
-        setPrice(response.data.product.price);
-        setQuantity(response.data.product.quantity);
-        setCategory(response.data.product.category?._id);
-        setShipping(response.data.product.shipping);
-        setId(response.data.product._id);
+      if (data.success) {
+        setProducts(data.products);
       }
     } catch (error) {
       console.log(error);
@@ -43,110 +22,50 @@ function ProductPage() {
   };
 
   useEffect(() => {
-    getProduct();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getAllProducts();
   }, []);
-
-  const getAllCategories = async () => {
-    try {
-      const response = await axios.get(`/api/v1/category/get-categories`);
-
-      if (response.data.success) {
-        setCategories(response.data.categories);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
-  };
-
-  useEffect(() => {
-    getAllCategories();
-  }, []);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const productData = new FormData();
-
-      productData.append("name", name);
-      productData.append("description", description);
-      productData.append("price", price);
-      productData.append("quantity", quantity);
-      productData.append("category", category);
-
-      if (image instanceof File) {
-        productData.append("image", image);
-      }
-
-      const response = await axios.put(
-        `/api/v1/product/update-product/${id}`,
-        productData
-      );
-
-      if (response.data.success) {
-        toast.success(`Product is updated`);
-        navigate("/dashboard/admin/products");
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      console.log(`Error: ${error.message}`);
-      toast.error("Something went wrong !");
-    }
-  };
-
-  const handleDelete = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.delete(
-        `/api/v1/product/delete-product/${id}`
-      );
-
-      if (response.data.success) {
-        toast.success(`Product is deleted`);
-        navigate("/dashboard/admin/products");
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      console.log(`Error: ${error.message}`);
-      toast.error("Something went wrong !");
-    }
-  };
 
   return (
     <>
-      <Layout title={"Admin - Create Product"}>
+      <Layout title={"Products"}>
         <div className="flex">
           <AdminMenu />
           <div className="p-5 w-full h-[73vh] overflow-scroll no-scrollbar">
-            <h1>Product</h1>
-            <div className="my-1 w-full">
-              <ProductForm
-                update={true}
-                submitText="Update product"
-                handleSubmit={handleSubmit}
-                handleDelete={handleDelete}
-                categories={categories}
-                name={name}
-                description={description}
-                category={category}
-                price={price}
-                quantity={quantity}
-                image={image}
-                shipping={shipping}
-                setName={setName}
-                setDescription={setDescription}
-                setCategory={setCategory}
-                setPrice={setPrice}
-                setQuantity={setQuantity}
-                setImage={setImage}
-                setShipping={setShipping}
-                id={id}
-              />
+            <h1 className="text-3xl font-semibold">All products</h1>
+            <div>
+              <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
+                {products.map((product) => (
+                  <a
+                    href={`/dashboard/admin/product/${product.slug}`}
+                    key={product._id}
+                  >
+                    <div className="group relative p-4 bg-gray-200 rounded-lg">
+                      <img
+                        alt="Product image"
+                        src={`/api/v1/product/get-product-image/${product._id}`}
+                        className="aspect-square w-full rounded-md bg-gray-100 object-cover group-hover:opacity-80 lg:aspect-auto lg:h-60"
+                      />
+                      <div className="mt-4 flex justify-between">
+                        <div>
+                          <h3 className="text-sm text-gray-700">
+                            <span
+                              aria-hidden="true"
+                              className="absolute inset-0"
+                            />
+                            {product.name}
+                          </h3>
+                          <p className="mt-1 text-sm text-gray-500">
+                            {product.description}
+                          </p>
+                        </div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {product.price}
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -155,4 +74,4 @@ function ProductPage() {
   );
 }
 
-export default ProductPage;
+export default Products;

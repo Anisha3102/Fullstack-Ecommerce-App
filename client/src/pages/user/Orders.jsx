@@ -14,10 +14,10 @@ function Orders() {
 
   const getOrders = async () => {
     try {
-      const response = await axios.get("/api/v1/auth/orders");
+      const { data } = await axios.get("/api/v1/auth/orders");
 
-      if (response.data.success) {
-        setOrders(response.data.orders);
+      if (data.success) {
+        setOrders(data.orders);
       }
     } catch (error) {
       console.log(error);
@@ -33,7 +33,7 @@ function Orders() {
 
   return (
     <>
-      <Layout title={"User - Orders"}>
+      <Layout title={`Your Orders`}>
         <div className="flex">
           <UserMenu />
           <div className="p-5 w-4/5">

@@ -10,10 +10,10 @@ function Products() {
 
   const getAllProducts = async () => {
     try {
-      const response = await axios.get("/api/v1/product/get-products");
+      const { data } = await axios.get("/api/v1/product/get-products");
 
-      if (response.data.success) {
-        setProducts(response.data.products);
+      if (data.success) {
+        setProducts(data.products);
       }
     } catch (error) {
       console.log(error);
@@ -27,11 +27,11 @@ function Products() {
 
   return (
     <>
-      <Layout title={"Admin - Products"}>
+      <Layout title={"Products"}>
         <div className="flex">
           <AdminMenu />
           <div className="p-5 w-full h-[73vh] overflow-scroll no-scrollbar">
-            <h1>All products</h1>
+            <h1 className="text-3xl font-semibold">All products</h1>
             <div>
               <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
                 {products.map((product) => (

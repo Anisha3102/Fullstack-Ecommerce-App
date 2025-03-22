@@ -23,16 +23,13 @@ const ProductDetails = () => {
 
   const getProduct = async () => {
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         `/api/v1/product/get-product/${params.slug}`
       );
 
-      if (response.data.success) {
-        setProduct(response.data.product);
-        getSimilarProducts(
-          response.data.product.category._id,
-          response.data.product._id
-        );
+      if (data.success) {
+        setProduct(data.product);
+        getSimilarProducts(data.product.category._id, data.product._id);
       }
     } catch (error) {
       console.log(error);
@@ -44,12 +41,12 @@ const ProductDetails = () => {
     try {
       setSimilarProductLoading(true);
 
-      const response = await axios.get(
+      const { data } = await axios.get(
         `/api/v1/product/similar-products/${categoryId}/${productId}`
       );
 
-      if (response.data.success) {
-        setSimilarProducts(response.data.products);
+      if (data.success) {
+        setSimilarProducts(data.products);
       }
     } catch (error) {
       console.log(error);
@@ -60,7 +57,7 @@ const ProductDetails = () => {
   };
 
   return (
-    <Layout>
+    <Layout title={`Product - ${product?.name}`}>
       <div className="w-full px-20 py-5">
         <div className="flex w-full p-5 items-center bg-gray-100 gap-10 rounded-lg">
           <div className="w-1/3 flex justify-end items-center">

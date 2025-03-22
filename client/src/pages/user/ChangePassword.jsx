@@ -16,23 +16,23 @@ const ChangePassword = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`/api/v1/auth/change-password`, {
+      const { data } = await axios.put(`/api/v1/auth/change-password`, {
         currentPassword,
         newPassword,
       });
 
-      if (response.data.success) {
+      if (data.success) {
         toast.success("password changed successfully");
         navigate("/dashboard/user");
       }
     } catch (error) {
-      console.log(`Error: ${error.message}`);
+      console.log(error.message);
       toast.error("Something went wrong !");
     }
   };
 
   return (
-    <Layout title={"User - Profile"}>
+    <Layout title={"Change password"}>
       <div className="flex">
         <UserMenu />
         <div className="mx-auto w-full md:w-3/4 lg:w-1/2 p-16">

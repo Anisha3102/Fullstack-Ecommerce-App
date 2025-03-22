@@ -19,13 +19,13 @@ const Category = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get(
+      const { data } = await axios.get(
         `/api/v1/product/category-products/${params.slug}`
       );
 
-      if (response.data.success) {
-        setProducts(response.data.products);
-        setCategory(response.data.category);
+      if (data.success) {
+        setProducts(data.products);
+        setCategory(data.category);
       }
     } catch (error) {
       console.log(error);
@@ -44,7 +44,7 @@ const Category = () => {
 
   return (
     <>
-      <Layout>
+      <Layout title={`Category - ${capitalizeString(category?.name)}`}>
         {loading ? (
           <Spinner />
         ) : (

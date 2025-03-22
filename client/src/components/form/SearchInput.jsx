@@ -1,5 +1,6 @@
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import { useSearch } from "../../context/SearchProvider";
 
 const SearchInput = () => {
@@ -11,12 +12,12 @@ const SearchInput = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.get(
+      const { data } = await axios.get(
         `/api/v1/product/search/${queries.keyword}`
       );
 
-      if (response.data.success) {
-        setQueries({ ...queries, result: response.data.result });
+      if (data.success) {
+        setQueries({ ...queries, result: data.result });
         navigate("/search");
       }
     } catch (error) {

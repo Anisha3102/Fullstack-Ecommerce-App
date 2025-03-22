@@ -53,12 +53,12 @@ const Cart = () => {
         throw new Error("Failed to get payment nonce");
       }
 
-      const response = await axios.post("/api/v1/product/braintree/payment", {
+      const { data } = await axios.post("/api/v1/product/braintree/payment", {
         cart,
         nonce,
       });
 
-      if (response.data.success) {
+      if (data.success) {
         console.log("check");
         localStorage.removeItem("cart");
         setCart([]);
@@ -75,10 +75,10 @@ const Cart = () => {
 
   const getClientToken = async () => {
     try {
-      const response = await axios.get("/api/v1/product/braintree/token");
+      const { data } = await axios.get("/api/v1/product/braintree/token");
 
-      if (response.data.success) {
-        setClientToken(response.data.token);
+      if (data.success) {
+        setClientToken(data.token);
       }
     } catch (error) {
       console.log(error);
@@ -91,7 +91,7 @@ const Cart = () => {
   }, [auth?.token]);
 
   return (
-    <Layout>
+    <Layout title={"Cartify - Cart"}>
       <div className="px-20 py-10">
         <div>
           <h1 className="text-2xl font-semibold">{`Hello ${

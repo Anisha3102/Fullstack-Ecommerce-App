@@ -7,7 +7,7 @@ function Dashboard() {
 
   return (
     <>
-      <Layout title={"User - Dashboard"}>
+      <Layout title={`${auth?.user.name} - Dashboard`}>
         <div className="flex">
           <UserMenu />
           <div className="p-5">

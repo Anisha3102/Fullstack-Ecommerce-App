@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 function Contact() {
   return (
     <>
-      <Layout title={"Contact us - Ecommerce"}>
+      <Layout title={"Contact us - Cartify"}>
         <div className="relative isolate overflow-hidden bg-gray-900 min-h-[73.5vh] py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="max-w-xl mb-20 lg:max-w-full">
@@ -53,7 +53,7 @@ function Contact() {
                         d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"
                       />
                     </svg>
-                    support@ecommerce.com
+                    support@cartify.com
                   </p>
                 </div>
 

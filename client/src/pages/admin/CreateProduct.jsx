@@ -21,10 +21,10 @@ function CreateProduct() {
 
   const getAllCategories = async () => {
     try {
-      const response = await axios.get(`/api/v1/category/get-categories`);
+      const { data } = await axios.get(`/api/v1/category/get-categories`);
 
-      if (response.data.success) {
-        setCategories(response.data.categories);
+      if (data.success) {
+        setCategories(data.categories);
       }
     } catch (error) {
       console.log(error);
@@ -49,30 +49,30 @@ function CreateProduct() {
       productData.append("image", image);
       productData.append("category", category);
 
-      const response = await axios.post(
+      const { data } = await axios.post(
         `/api/v1/product/create-product`,
         productData
       );
 
-      if (response.data.success) {
+      if (data.success) {
         toast.success(`Product is created`);
         navigate("/dashboard/admin/products");
       } else {
-        toast.error(response.data.message);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.log(`Error: ${error.message}`);
+      console.log(error);
       toast.error("Something went wrong !");
     }
   };
 
   return (
     <>
-      <Layout title={"Admin - Create Product"}>
+      <Layout title={"Create product"}>
         <div className="flex">
           <AdminMenu />
           <div className="p-5 w-full h-[73vh] overflow-scroll no-scrollbar">
-            <h1>Create Product</h1>
+            <h1 className="text-3xl font-semibold">Create Product</h1>
             <div className="my-1 w-full">
               <ProductForm
                 submitText="Create product"

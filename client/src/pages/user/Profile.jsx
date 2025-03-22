@@ -16,7 +16,6 @@ function Profile() {
 
   useEffect(() => {
     const { name, email, phone, address } = auth.user;
-
     setName(name);
     setEmail(email);
     setPhone(phone);
@@ -27,19 +26,19 @@ function Profile() {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`/api/v1/auth/update-profile`, {
+      const { data } = await axios.put(`/api/v1/auth/update-profile`, {
         name,
         email,
         phone,
         address,
       });
 
-      if (response.data.success) {
-        setAuth({ ...auth, user: response.data.user });
+      if (data.success) {
+        setAuth({ ...auth, user: data.user });
 
         let ls = localStorage.getItem("user");
         ls = JSON.parse(ls);
-        ls.user = response.data.user;
+        ls.user = data.user;
         localStorage.setItem("auth", JSON.stringify(ls));
 
         toast.success("profile updated successfully");
@@ -47,14 +46,14 @@ function Profile() {
         toast.error("Failed to update profile");
       }
     } catch (error) {
-      console.log(`Error: ${error.message}`);
+      console.log(error);
       toast.error("Something went wrong !");
     }
   };
 
   return (
     <>
-      <Layout title={"User - Profile"}>
+      <Layout title={"Your Profile"}>
         <div className="flex">
           <UserMenu />
           <div className="mx-auto w-full md:w-3/4 lg:w-1/2 p-16">

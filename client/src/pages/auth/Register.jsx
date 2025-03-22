@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 import Layout from "../../components/Layout/Layout";
 
@@ -18,7 +18,7 @@ export default function Register() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(`/api/v1/auth/register`, {
+      const { data } = await axios.post(`/api/v1/auth/register`, {
         name,
         email,
         password,
@@ -26,21 +26,21 @@ export default function Register() {
         address,
       });
 
-      if (response && response.data.success) {
-        toast.success(response && response.data.message);
+      if (data.success) {
+        toast.success(data.message);
         navigate("/login");
       } else {
-        toast.error(response.data.message);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.log(`Error: ${error.message}`);
+      console.log(error);
       toast.error("Something went wrong !");
     }
   };
 
   return (
     <>
-      <Layout title={"register - Ecommerce"}>
+      <Layout title={"Cartify - Register"}>
         <div className="mx-auto w-full md:w-3/4 lg:w-1/2 p-16">
           <h1 className="mb-10 text-3xl font-bold">Create account</h1>
           <form onSubmit={handleSubmit}>
