@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import chalk from "chalk";
 
 import Layout from "../../components/Layout/Layout";
 
@@ -34,7 +33,7 @@ export default function Register() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(chalk(`Error: ${error.message}`));
+      console.log(`Error: ${error.message}`);
       toast.error("Something went wrong !");
     }
   };

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
-import chalk from "chalk";
 
 import Layout from "../../components/Layout/Layout";
 import AdminMenu from "../../components/Layout/AdminMenu";
@@ -28,7 +27,7 @@ function CreateProduct() {
         setCategories(response.data.categories);
       }
     } catch (error) {
-      console.log(chalk(error));
+      console.log(error);
       toast.error(error.message);
     }
   };
@@ -62,7 +61,7 @@ function CreateProduct() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.log(chalk(`Error: ${error.message}`));
+      console.log(`Error: ${error.message}`);
       toast.error("Something went wrong !");
     }
   };

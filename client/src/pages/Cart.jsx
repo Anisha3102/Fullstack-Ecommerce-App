@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import chalk from "chalk";
 import DropIn from "braintree-web-drop-in-react";
 
 import Layout from "../components/Layout/Layout.jsx";
@@ -25,7 +24,7 @@ const Cart = () => {
       const total = cart.reduce((acc, val) => (acc += val.price), 0);
       return total;
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error("Failed in calculating the total");
     }
   };
@@ -39,7 +38,7 @@ const Cart = () => {
       localStorage.setItem("cart", JSON.stringify(myCart));
       toast.success("Item removed from cart");
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error("Failed to remove item from cart");
     }
   };
@@ -67,7 +66,7 @@ const Cart = () => {
         toast.success("Payment completed successfully");
       }
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error("Error in payment");
     } finally {
       setPaymentLoading(false);
@@ -82,7 +81,7 @@ const Cart = () => {
         setClientToken(response.data.token);
       }
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error("Failed to get client token");
     }
   };

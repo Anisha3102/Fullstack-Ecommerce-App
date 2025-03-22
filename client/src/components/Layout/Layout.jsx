@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import { Helmet } from "react-helmet";
 import { Toaster } from "react-hot-toast";
 
@@ -16,7 +16,6 @@ function Layout({ children, title, description, keywords, author }) {
           <meta name="author" content={author} />
         </div>
         <title>{title}</title>
-        {/* <link rel="canonical" href="http://mysite.com/example" /> */}
       </Helmet>
 
       <Header />
@@ -33,7 +32,7 @@ Layout.defaultProps = {
   title: "Ecommerce app",
   description: "Mern stack project",
   keywords: "MERN MongoDB Express React Node",
-  author: "Anisha Das",
+  author: "Saumyajeet Varma",
 };
 
 export default Layout;

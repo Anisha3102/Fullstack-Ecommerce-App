@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import chalk from "chalk";
 
 export default function useCategory() {
   const [categories, setCategories] = useState([]);
@@ -13,7 +12,7 @@ export default function useCategory() {
         setCategories(response.data.categories);
       }
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
     }
   };
 

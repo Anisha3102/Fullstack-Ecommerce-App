@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import chalk from "chalk";
 import { Checkbox, Radio } from "antd";
 
 import Layout from "../components/Layout/Layout";
 import { prices } from "../utils/prices.js";
 import SearchInput from "../components/form/SearchInput.jsx";
 import { useCart } from "../context/CartProvider.jsx";
-// eslint-disable-next-line no-unused-vars
 import Spinner from "../components/Spinner.jsx";
 import { capitalizeString } from "../utils/capitalizeString.js";
 
@@ -38,7 +36,7 @@ function Homepage() {
         setTotal(response.data.totalProducts);
       }
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error(error.message);
     } finally {
       setLoading(false);
@@ -55,7 +53,7 @@ function Homepage() {
         setCategories(response.data.categories);
       }
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error(error.message);
     } finally {
       setLoading(false);
@@ -77,7 +75,7 @@ function Homepage() {
         setProducts(response.data.products);
       }
     } catch (error) {
-      console.log(chalk.red(`Error: ${error.message}`));
+      console.log(`Error: ${error.message}`);
       toast.error("Something went wrong !");
     } finally {
       setLoading(false);
@@ -103,7 +101,7 @@ function Homepage() {
         setProducts([...products, ...response.data.products]);
       }
     } catch (error) {
-      console.log(chalk.red(`Error: ${error.message}`));
+      console.log(`Error: ${error.message}`);
       toast.error("Something went wrong !");
     } finally {
       setPaginationLoading(false);
@@ -149,7 +147,7 @@ function Homepage() {
         setProducts(response?.data?.products);
       }
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error(error.message);
     } finally {
       setLoading(false);

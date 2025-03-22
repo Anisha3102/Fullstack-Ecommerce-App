@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import chalk from "chalk";
 
 import Layout from "../components/Layout/Layout";
 import Spinner from "../components/Spinner";
@@ -36,7 +35,7 @@ const ProductDetails = () => {
         );
       }
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error(error.message);
     }
   };
@@ -53,7 +52,7 @@ const ProductDetails = () => {
         setSimilarProducts(response.data.products);
       }
     } catch (error) {
-      console.log(chalk.red(error));
+      console.log(error);
       toast.error(error.message);
     } finally {
       setSimilarProductLoading(false);
