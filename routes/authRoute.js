@@ -6,6 +6,8 @@ import {
   changePasswordController,
   getAllOrdersController,
   getOrderController,
+  getAllAdminOrdersController,
+  changeOrderStatusController,
 } from "../controllers/authController.js";
 import { isAdmin, verifyJWT } from "../middlewares/authMiddleware.js";
 
@@ -30,5 +32,14 @@ router.get("/adminAuth", verifyJWT, isAdmin, (req, res) => {
 router.get("/orders", verifyJWT, getAllOrdersController);
 
 router.get("/order/:orderId", verifyJWT, getOrderController);
+
+router.get("/admin-orders", verifyJWT, isAdmin, getAllAdminOrdersController);
+
+router.put(
+  "/change-order-status/:orderId",
+  verifyJWT,
+  isAdmin,
+  changeOrderStatusController
+);
 
 export default router;

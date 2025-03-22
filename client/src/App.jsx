@@ -17,7 +17,6 @@ import CreateCategory from "./pages/admin/CreateCategory.jsx";
 import CreateProduct from "./pages/admin/CreateProduct.jsx";
 import ProductPage from "./pages/admin/ProductPage.jsx";
 import Products from "./pages/admin/Products.jsx";
-import Users from "./pages/admin/Users.jsx";
 import Profile from "./pages/user/Profile.jsx";
 import Orders from "./pages/user/Orders.jsx";
 import OrderPage from "./pages/user/OrderPage.jsx";
@@ -25,6 +24,8 @@ import Search from "./pages/Search.jsx";
 import ProductDetails from "./pages/ProductDetails.jsx";
 import Category from "./pages/Category.jsx";
 import ChangePassword from "./pages/user/ChangePassword.jsx";
+import AdminOrders from "./pages/admin/AdminOrders.jsx";
+import AdminOrderPage from "./pages/admin/AdminOrderPage.jsx";
 
 function App() {
   return (
@@ -58,7 +59,8 @@ function App() {
         <Route path="admin/createProduct" element={<CreateProduct />} />
         <Route path="admin/product/:slug" element={<ProductPage />} />
         <Route path="admin/products" element={<Products />} />
-        <Route path="admin/users" element={<Users />} />
+        <Route path="admin/orders" element={<AdminOrders />} />
+        <Route path="admin/order/:orderId" element={<AdminOrderPage />} />
       </Route>
 
       <Route path="*" element={<PageNotFound />} />
