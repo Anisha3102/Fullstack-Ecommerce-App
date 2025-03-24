@@ -79,6 +79,7 @@ const Cart = () => {
 
       if (data.success) {
         setClientToken(data.token);
+        console.log(data.token)
       }
     } catch (error) {
       console.log(error);
@@ -87,8 +88,10 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    getClientToken();
-  }, [auth?.token]);
+    if (auth?.user) {
+      getClientToken();
+    };
+  }, [auth?.user]);
 
   return (
     <Layout title={"Cartify - Cart"}>

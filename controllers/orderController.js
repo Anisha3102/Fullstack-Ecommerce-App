@@ -113,7 +113,8 @@ export const changeOrderStatusController = async (req, res) => {
 };
 
 export const braintreeTokenController = async (req, res) => {
-  try {
+    try {
+      console.log(process.env.BRAINTREE_PUBLIC_KEY)
     gateway.clientToken.generate({}, function (error, response) {
       if (error) {
         res.status(500).send({
@@ -122,7 +123,8 @@ export const braintreeTokenController = async (req, res) => {
           error,
         });
       } else {
-        if (response.success) {
+          if (response.success) {
+        console.log(response)
           res.status(200).send({
             success: true,
             message: "Token generated successfully",

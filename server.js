@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
   res.send("Server is listening");
 });
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(
     chalk.blue(`\nServer is running on ${process.env.DEV_MODE} mode at ${PORT}`)
