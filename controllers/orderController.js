@@ -1,8 +1,6 @@
-
 import chalk from "chalk";
 
 import orderModel from "../models/orderModel.js";
-
 
 export const getAllOrdersController = async (req, res) => {
   try {
@@ -106,16 +104,16 @@ export const checkOutController = async (req, res) => {
   try {
     const { cart } = req.body;
     const order = await orderModel.create({
-      product: cart,
+      products: cart,
       payment: "success",
-      buyer: req.user._id
-       })
-      
+      buyer: req.user._id,
+    });
+
     res.status(200).send({
       success: true,
       message: "payment successful",
       order,
-    })
+    });
   } catch (error) {
     console.log(chalk.red(error));
 
@@ -125,4 +123,4 @@ export const checkOutController = async (req, res) => {
       error,
     });
   }
-}
+};
