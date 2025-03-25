@@ -1,9 +1,8 @@
 import express from "express";
 import { isAdmin, verifyJWT } from "../middlewares/authMiddleware.js";
 import {
-  braintreePaymentController,
-  braintreeTokenController,
   changeOrderStatusController,
+  checkOutController,
   getAllAdminOrdersController,
   getAllOrdersController,
   getOrderController,
@@ -24,8 +23,6 @@ router.put(
   changeOrderStatusController
 );
 
-router.get("/braintree/token", braintreeTokenController);
-
-router.post("/braintree/payment", verifyJWT, braintreePaymentController);
+router.post("/checkout", verifyJWT, checkOutController);
 
 export default router;

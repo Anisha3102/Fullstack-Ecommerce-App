@@ -1,4 +1,3 @@
-
 import toast from "react-hot-toast";
 import axios from "axios";
 import moment from "moment";
@@ -42,9 +41,6 @@ const OrderTable = ({ orders, admin, status }) => {
                 Orders
               </th>
               <th className="py-3 px-6 text-left text-gray-600 font-semibold">
-                Payment
-              </th>
-              <th className="py-3 px-6 text-left text-gray-600 font-semibold">
                 Quantity
               </th>
               <th className="py-3 px-6 text-left text-gray-600 font-semibold"></th>
@@ -77,9 +73,7 @@ const OrderTable = ({ orders, admin, status }) => {
                 <td className="py-3 px-6">
                   {moment(order?.createdAt).fromNow()}
                 </td>
-                <td className="py-3 px-6">
-                  {order?.payment.success ? "Success" : "Failed"}
-                </td>
+
                 <td className="py-3 px-6">{order?.products?.length}</td>
                 <td className="py-3 px-6">
                   <a
