@@ -5,11 +5,13 @@ import axios from "axios";
 
 import Layout from "../components/Layout/Layout";
 import Spinner from "../components/Spinner";
+import { useCart } from "../context/CartProvider";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState({});
   const [similarProducts, setSimilarProducts] = useState([]);
   const [similarProductLoading, setSimilarProductLoading] = useState(false);
+  const [cart, setCart] = useCart();
 
   const navigate = useNavigate();
   const params = useParams();
@@ -122,7 +124,13 @@ const ProductDetails = () => {
                     >
                       More details
                     </button>
-                    <button className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 z-0">
+                    <button
+                      onClick={() => {
+                        setCart([...cart, product]);
+                        toast.success(`${product.name} added to cart`);
+                      }}
+                      className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 z-0"
+                    >
                       Add to cart
                     </button>
                   </div>

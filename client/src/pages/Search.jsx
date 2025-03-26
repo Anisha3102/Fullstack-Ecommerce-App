@@ -1,10 +1,13 @@
 import SearchInput from "../components/form/SearchInput.jsx";
 import Layout from "../components/Layout/Layout.jsx";
+import { useCart } from "../context/CartProvider.jsx";
 import { useSearch } from "../context/SearchProvider.jsx";
+import toast from "react-toastify";
 
 const Search = () => {
   // eslint-disable-next-line no-unused-vars
   const [queries, setQueries] = useSearch();
+  const [cart, setCart] = useCart();
 
   return (
     <Layout title={"Search results"}>
@@ -46,7 +49,13 @@ const Search = () => {
                   <button className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
                     More details
                   </button>
-                  <button className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+                  <button
+                    onClick={() => {
+                      setCart([...cart, product]);
+                      toast.success(`${product.name} added to cart`);
+                    }}
+                    className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                  >
                     Add to cart
                   </button>
                 </div>
