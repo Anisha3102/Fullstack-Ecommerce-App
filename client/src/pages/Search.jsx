@@ -2,11 +2,10 @@ import SearchInput from "../components/form/SearchInput.jsx";
 import Layout from "../components/Layout/Layout.jsx";
 import { useCart } from "../context/CartProvider.jsx";
 import { useSearch } from "../context/SearchProvider.jsx";
-import toast from "react-toastify";
+import toast from "react-hot-toast";
 
 const Search = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [queries, setQueries] = useSearch();
+  const [queries] = useSearch();
   const [cart, setCart] = useCart();
 
   return (
@@ -23,7 +22,7 @@ const Search = () => {
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-4">
             {queries.result.map((product) => (
               <div
-                className="group relative p-4 bg-gray-100 rounded-lg -z-10"
+                className="group relative p-4 bg-gray-100 rounded-lg "
                 key={product._id}
               >
                 <img
@@ -54,7 +53,7 @@ const Search = () => {
                       setCart([...cart, product]);
                       toast.success(`${product.name} added to cart`);
                     }}
-                    className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                    className="rounded-md bg-gray-600 z-0 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                   >
                     Add to cart
                   </button>

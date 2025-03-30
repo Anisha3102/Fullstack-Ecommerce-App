@@ -82,7 +82,13 @@ const ProductDetails = () => {
               <span className="font-semibold">Price</span>: ${product.price}
             </h4>
             {/* <h4 className="text-lg"><span className="font-semibold">Category</span>: {product.category.name}</h4> */}
-            <button className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 z-0 mt-5">
+            <button
+              onClick={() => {
+                setCart([...cart, product]);
+                toast.success(`${product.name} added to cart`);
+              }}
+              className="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 z-0 mt-5"
+            >
               Add to cart
             </button>
           </div>
