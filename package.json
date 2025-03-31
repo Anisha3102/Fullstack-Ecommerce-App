@@ -4,8 +4,9 @@
   "main": "server .js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "frontend": "npm run dev --prefix ./client",
+    "backend":"nodemon server.js",
     "concurrent": "concurrently \"npm start\" \"npm run frontend\""
   },
   "keywords": [],
